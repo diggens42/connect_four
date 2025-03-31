@@ -57,3 +57,8 @@ button {
     border: none;
     border-radius: 5px;
 }
+
+.board.disabled {
+    pointer-events: none;
+    opacity: 0.8;
+}
