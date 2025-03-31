@@ -28,7 +28,74 @@ export class Board
 
 	public winCheck(): boolean
 	{
-		// horizontal, vertial, diagonal checks to be implemented
+		//check horizontal
+		for (let row = 0; row <= this.rows; row++)
+		{
+			for (let col = 0; col <= this.cols - 4; col++)
+			{
+				if (
+					this.grid[row][col] !== 0 &&
+					this.grid[row][col] === this.grid[row][col + 1] &&
+					this.grid[row][col] === this.grid[row][col + 2] &&
+					this.grid[row][col] === this.grid[row][col + 3]
+				)
+				{
+					return true;
+				}
+			}
+		}
+
+		// check vertical
+		for (let row = 0; row <= this.rows - 4; row++)
+		{
+			for (let col = 0; col <= this.cols; col++)
+			{
+				if (
+					this.grid[row][col] !== 0 &&
+					this.grid[row][col] === this.grid[row + 1][col] &&
+					this.grid[row][col] === this.grid[row + 2][col] &&
+					this.grid[row][col] === this.grid[row + 3][col]
+				)
+				{
+					return (true);
+				}
+			}
+		}
+
+		//check diagonal (down-right)
+		for (let row = 0; row <= this.rows - 4; row++)
+		{
+			for (let col = 0; col <= this.cols - 4; col++)
+			{
+				if (
+					this.grid[row][col] !== 0 &&
+					this.grid[row][col] === this.grid[row + 1][col + 1] &&
+					this.grid[row][col] === this.grid[row + 2][col + 2] &&
+					this.grid[row][col] === this.grid[row + 3][col + 3]
+				)
+				{
+					return (true);
+				}
+			}
+		}
+
+		//check diagonal (up-right)
+		for (let row = 3; row < this.rows; row++)
+		{
+			for (let col = 0; col <= this.cols - 4; col++)
+			{
+				if (
+					this.grid[row][col] !== 0 &&
+					this.grid[row][col] === this.grid[row - 1][col + 1] &&
+					this.grid[row][col] === this.grid[row - 2][col + 2] &&
+					this.grid[row][col] === this.grid[row - 3][col + 3]
+				)
+				{
+					return (true);
+				}
+			}
+		}
+
 		return (false);
 	}
 
