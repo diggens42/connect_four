@@ -9,8 +9,8 @@ export class Game
 	constructor()
 	{
 		this.board = new Board();
-		this.boardElement = document.getElementById('board');
-		this.gameStatus = document.getElementById('status');
+		this.boardElement = document.getElementById('board') as HTMLElement;
+		this.gameStatus = document.getElementById('status') as HTMLElement;
 		this.renderBoard();
 		this.attachEventListeners();
 	}
@@ -39,13 +39,13 @@ export class Game
 			}
 			this.boardElement.appendChild(column);
 		}
-		this.gameStatus.textContent = ' Player ${this.board.getCurrentPlayer()}s turn';
+		this.gameStatus.textContent = `Player ${this.board.getCurrentPlayer()}'s turn`
 	}
 
 	private attachEventListeners(): void
 	{
 		this.boardElement.addEventListener('click', (event) => {
-			const column = (event.target as HTMLElement).closest('.closest');
+			const column: HTMLElement = (event.target as HTMLElement).closest('.column') as HTMLElement;
 
 			if (!column)
 				return;
@@ -55,8 +55,17 @@ export class Game
 
 			if (success)
 			{
+				this.renderBoard();
 				if (this.board.winCheck())
+				{
 					this.gameStatus.textContent = 'Player ${this.board.getCurrentPlayer()} wins!';
+					this.disableBoard();
+				}
+				else if (this.board.isDraw())
+				{
+					this.gameStatus.textContent = "Game ended in a draw!";
+					this.disableBoard();
+				}
 				else
 				{
 					this.board.switchPlayer();
@@ -64,5 +73,27 @@ export class Game
 				}
 			}
 		});
+
+		const resetButton = document.getElementById('reset');
+		if (resetButton)
+		{
+			resetButton.addEventListener('click', () =>
+			{
+				this.board.reset();
+				this.renderBoard();
+				this.enableBoard();
+			});
+		}
+	}
+
+	private disableBoard(): void
+	{
+		this.boardElement.classList.add('disabled');
+	}
+
+	private enableBoard(): void
+	{
+		this.boardElement.classList.remove('disabled');
 	}
 }
+

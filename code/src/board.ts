@@ -99,6 +99,17 @@ export class Board
 		return (false);
 	}
 
+	public isDraw() : boolean
+	{
+		return (this.grid[0].every(cell => cell !== 0));
+	}
+
+	public reset(): void
+	{
+		this.grid = Array(this.rows).fill(null).map(() => Array(this.cols).fill(0));
+		this.currentPlayer = 1;
+	}
+
 	public switchPlayer(): void
 	{
 		this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
